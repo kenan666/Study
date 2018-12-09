@@ -1,9 +1,7 @@
 #include <stdio.h>
 #define MaxSize 100
  
-/*
-* Created by HarvestWu on 2018/07/18.
-*/
+
 using namespace std;
 typedef int ElemType;
  
