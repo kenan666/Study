@@ -1,3 +1,6 @@
+//  移除相同元素  +  字符串匹配
+
+
 /*
 给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。
 
@@ -108,6 +111,7 @@ def removeElement(self, nums: List[int], val: int) -> int:
             return i - j
         return -1
 
+
 //  解 3  sunday  算法
 //  来源于网络了解，了解不透彻
 int strStr(string haystack, string needle) 
@@ -146,3 +150,4 @@ int strStr(string haystack, string needle)
     }
     return -1;//当超过源串长度时 
 }
+
