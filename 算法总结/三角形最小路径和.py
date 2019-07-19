@@ -23,7 +23,7 @@ def minimumTotal(self, triangle: List[List[int]]) -> int:
         if 0 <= i <len(triangle[level]):
             helper(level + 1,i, i+1,tmp+triangle[level][i])
         if 0 <= j <len(triangle[level]):
-            helper(level + 1,i, i+1,tmp+triangle[level][i])
+            helper(level + 1,j, j+1,tmp+triangle[level][j])
     helper(0,-1,0,0)
     return self.res
 
