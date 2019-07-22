@@ -43,6 +43,21 @@ cost = [3,4,3]
 因此，无论怎样，你都不可能绕环路行驶一周。
 
 '''
+'''
+算法
+
+1、初始化 total_tank 和 curr_tank 为 0 ，并且选择 0 号加油站为起点。
+
+2、遍历所有的加油站：
+
+  ·每一步中，都通过加上 gas[i] 和减去 cost[i] 来更新 total_tank 和 curr_tank 。
+
+  ·如果在 i + 1 号加油站， curr_tank < 0 ，将 i + 1 号加油站作为新的起点，同时重置 curr_tank = 0 ，让油箱也清空。
+
+3、如果 total_tank < 0 ，返回 -1 ，否则返回 starting station。
+
+'''
+
 #--------难度较大，参考的大佬题解----------------------------
 # 从i到j位置,有 sum(gas) < sum(cost),说明i到不了j,并且i到j之间任何一个位置都到不了j
 def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
