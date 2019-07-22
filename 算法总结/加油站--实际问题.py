@@ -57,6 +57,37 @@ cost = [3,4,3]
 3、如果 total_tank < 0 ，返回 -1 ，否则返回 starting station。
 
 '''
+# 大佬题解
+class Solution:
+    def canCompleteCircuit(self, gas, cost):
+        """
+        :type gas: List[int]
+        :type cost: List[int]
+        :rtype: int
+        """
+        n = len(gas)
+        
+        total_tank, curr_tank = 0, 0
+        starting_station = 0
+        for i in range(n):
+            total_tank += gas[i] - cost[i]
+            curr_tank += gas[i] - cost[i]
+            # If one couldn't get here,
+            if curr_tank < 0:
+                # Pick up the next station as the starting one.
+                starting_station = i + 1
+                # Start with an empty tank.
+                curr_tank = 0
+        
+        return starting_station if total_tank >= 0 else -1
+
+'''
+时间复杂度： O(N) ， 这是因为只有一个遍历了所有加油站一次的循环。
+
+空间复杂度： O(1) ，因为此算法只使用了常数个变量。
+
+'''
+
 
 #--------难度较大，参考的大佬题解----------------------------
 # 从i到j位置,有 sum(gas) < sum(cost),说明i到不了j,并且i到j之间任何一个位置都到不了j
