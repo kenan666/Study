@@ -64,6 +64,8 @@ def findMin(self, nums: List[int]) -> int:
 输出: 0
 
 '''
+
+'''
 1、旋转排序数组nums可以被拆分为2个排序数组nums1, nums2，并且nums1所有元素>=nums2所有元素；因此，考虑二分法寻找值nums[i]；
 
 2、设置left, right指针在nums数组两端，mid为中点：
@@ -90,7 +92,10 @@ def findMin(self, nums: List[int]) -> int:
     left, right = 0, len(nums) - 1
     while left < right:
         mid = (left + right) // 2
-        if nums[mid] > nums[right]: left = mid + 1
-        elif nums[mid] < nums[right]: right = mid
-        else: right = right - 1 # key
+        if nums[mid] > nums[right]: 
+            left = mid + 1
+        elif nums[mid] < nums[right]: 
+            right = mid
+        else: 
+            right = right - 1 # key
     return nums[left]
