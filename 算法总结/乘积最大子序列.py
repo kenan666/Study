@@ -28,7 +28,7 @@ def maxProduct(self, nums: List[int]) -> int:
     minv = 0
     for i,j in enumerate(nums):
         if i > 0:
-        a[i] = max(a[i-1] * j, j, minv * j)
-        minv = min(a[i-1] * j, j, minv * j)
+            a[i] = max(a[i-1] * j, j, minv * j)
+            minv = min(a[i-1] * j, j, minv * j)
     return max(a)
 
