@@ -22,6 +22,7 @@
 2、否则，nums[mid] < nums[right]：例子：[8, 9, 1, 2, 3, 4, 5, 6]，此时 mid 有可能是最小。
 
 '''
+
 def findMin(self, nums: List[int]) -> int:
     size = len(nums)
     if size == 0:
@@ -63,3 +64,33 @@ def findMin(self, nums: List[int]) -> int:
 输出: 0
 
 '''
+1、旋转排序数组nums可以被拆分为2个排序数组nums1, nums2，并且nums1所有元素>=nums2所有元素；因此，考虑二分法寻找值nums[i]；
+
+2、设置left, right指针在nums数组两端，mid为中点：
+
+    ·当nums[mid] > nums[right]时，一定满足mid < i <= right，因此left = mid + 1；
+    ·当nums[mid] < nums[right]时，一定满足left < i <= mid，因此right = mid；
+    ·当nums[mid] == nums[right]时，是此题对比153题的难点（原因是此题中数组的元素可重复，相等就难以判断最小值的指针区间）；先说结果：采用right = right - 1，
+
+        下面证明：
+        ·首先，此操作不会使数组越界，因为right > left > 0；
+        ·其次，此操作不会使最小值丢失，证明：假设'nums[right]'是最小值，有两种情况：
+
+            ·若nums[right]是唯一最小值：那就不可能满足判断条件nums[mid] == nums[right]，因为left != right且mid = left + right // 2 < right（向下取整）；
+            ·若有其他元素和nums[right]同为最小值：还有最小值存在于[left, right -1]间，不会丢失最小值。
+
+以上是理论分析，可以用以下数组辅助思考：
+[1, 2, 3]
+[1, 1, 0, 1]
+[1, 0, 1, 1, 1]
+[1, 1, 1, 1]
+
+'''
+def findMin(self, nums: List[int]) -> int:
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+        if nums[mid] > nums[right]: left = mid + 1
+        elif nums[mid] < nums[right]: right = mid
+        else: right = right - 1 # key
+    return nums[left]
