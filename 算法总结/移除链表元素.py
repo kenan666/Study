@@ -13,9 +13,6 @@ def removeElements(self, head, val):
     
     while head is not None and head.val == val:
         head = head.next 
-        
-    if head == None:
-        return None
     
     p = head
     
