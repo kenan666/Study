@@ -34,10 +34,137 @@
     只是在表格中简单地查看一下结果，从而获得较高的效率。
 
 ---------------->>> 经典问题  背包问题  ** 添加补充
+
+计算式来源于  斐波那契算数
+        fib(n-1) +fib(n-2)  n>2
+fib(n) = 
+        1  n=1/2
+
+实际概念：求最大值--求最优解**
+            选    V(i) + OPT(preV(i))
+OPT(i) =max 
+            不选  OPT(i-1)
+
+两种情况  opt(0) = arr[0]    opt(1) = max(arr[0],arr[1])
+
+'''
+#------------例1----------------------
+'''
+选择一些数字，使得和最大。
+* 选择某个数字后，则不能选择相邻数字
+例：
+4    1    1    9    1
+^    _   ---> 此时 4 后的 1 则不能选择，可选其他数字
+
+          _    ^    _  ---->选择 9 之后，则两边 1 都不能进行选择，可选其他数字
 '''
 
+'''
+例：
+        0    1    2    3    4    5    6 
+arr     1    2    4    1    7    8    3
 
+假设                                 opt(6)
+                                +/                 \-
+               max      opt(4)+arr[6]             opt(5)       
+                      +/           \-         +/             \- 
+            max  opt(2)+arr[4]    opt(3)   max opt(3)+arr[5]  opt(4)
 
+此时opt(4)   与  opt(3)  是重复子问题
+
+得到公式：
+            选 -->  A = opt(i-2) + arr[i]
+opt(i) = max
+            不选  --> B = opt(i-1)
+
+opt(0) = arr[0]
+opt(1) = max(arr[0],arr[1])
+
+'''
+#----------------解1--》递归--------------
+arr = [1,2,4,1,7,8,3]
+def rec_opt(arr,i):
+    if i == 0:
+        return arr[0]
+    elif i == 1:
+        return max(arr[0],arr[1])
+    else:
+        A = rec_opt(arr,i-2) + arr[i]
+        B = rec_opt(i-1)
+        return max(A,B)
+
+#-------------非递归--------------------
+import numpy as np
+arr = [1,2,4,1,7,8,3]
+def dp_opt(arr,i):
+    opt = np.zeros(len(arr))
+    opt[0] = arr[0]
+    opt[1] = max(arr[0],arr[1])
+    for i in range (2,len(arr)):
+        A = opt[i-2] + arr[i]
+        B = opt[i-1]
+        opt[i] = max(A,B)
+    return opt[len(arr) - 1]
+
+'''
+例2：
+        0    1    2    3    4        target = S = 9 
+arr     3    4    12   5    2    
+
+subset(i,S)                      subset(arr[i],S)
+                            +/                          \-
+                    subset(arr,i-1,S-arr[i-1])   or  subset(arr[i],S)
+                    
+1、如果 subset(arr[2],0)   如果所需要的 S 为  0 ：
+则--->  if s==0: return True
+
+2、 如果  subset(arr[i],s)   --->  arr[0] == s
+则： ---->   if i == 0 : return arr[0] == s
+
+3、 if arr[i] > s:  ---->  此时只考虑不选那种情况
+则： ---> return subset(arr[i-1],S)
+                    选  subset(arr,i-1,s-arr[i])
+subset(arr,i,s) = 
+                    不选 subset (arr,i-1,S)
+'''
+# -------------解1 --递归-----------------------
+arr = [3,4,12,5,2]
+def rec_subset(arr,i,s):
+    if s == 0:
+        return True
+    elif i == 0:
+        return arr[0] == s
+    elif arr[i] == s:
+        return rec_subset(arr,i-1,s)
+    else:
+        A = rec_subset(arr,i-1,s-arr[i])
+        B = rec_subset(arr,i-1,s)
+        return A or B
+
+#--------非递归--------------------------------
+import numpy as np
+arr = [3,4,12,5,2]
+def dp_subset(arr,S):
+
+    subset = np.zeros((len(arr),S+1),dtype=bool)
+    subset[:,0] = True
+    subset[0,:] = False
+    subset[0,arr[0]] = True
+
+    for i in range (1,len(arr)):
+        for s in range (1,S+1):
+            if arr[i] > s:
+                subset[i,s] = subset[i-1,s]
+            else:
+                A = subset[i-1,s-arr[i]]
+                B = subset[i-1,s]
+                subset[i,s] = A or B
+    r,c = subset.shape
+    return subset[r-1,c-1]
+#------------------------------------------------------------------------------------------------------------------
+# 以上动态规划小实例分析，求最大值或者最优解，基本都是动态规划问题，可用递归或者非递归函数进行求解
+# 实际运用中，递归会循环求解子问题，非递归则不会求解，相对来说，递归代码比较容易实现
+# -----------------------------------------------------------------------------------------------------------------   
 '''
 给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
 
