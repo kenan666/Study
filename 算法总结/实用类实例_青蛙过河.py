@@ -89,7 +89,7 @@ def canCross(self, stones: List[int]) -> bool:
 # ------------参考官方----------------------
 # -- 动态规划-------------
 '''
-利用散列表 mapmap，对于散列表中的 key:value，key表示当前石头的位置，value 是一个包含 jumpsize 的集合，
+利用散列表 map，对于散列表中的 key:value，key表示当前石头的位置，value 是一个包含 jumpsize 的集合，
 其中每个 jumpsize 代表可以通过大小为 jumpysize 的一跳到达当前位置。
 
 首先我们对散列表初始化，key 为所有石头的位置，除了位置 0 对应的 value 为包含一个值 0 的集合以外，其余都初始化为空集。
