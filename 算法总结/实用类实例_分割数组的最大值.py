@@ -163,15 +163,39 @@ def minEatingSpeed(self, piles, H):
     def possible(K):
         return sum((p-1) / K + 1 for p in piles) <= H
 
-    lo, hi = 1, max(piles)
-    while lo < hi:
-        mi = (lo + hi) / 2
-        if not possible(mi):
-            lo = mi + 1
-        else:
-            hi = mi
+    low, high = 1, max(piles)
 
-    return lo
+    while low < high:
+        mid = (low + high) / 2
+        if not possible(mid):
+            low = mid + 1
+        else:
+            high = mid
+
+    return low
 
 # 时间复杂度O(NlogW)
 # 空间复杂度O(1)
+
+#----------解法2----> 超时---值得考虑---
+
+def minSpeed(piles, H):
+    K = 1 # 吃的最少
+    total = H+1 # 总共用时
+    while total>H:
+        total = 0
+        for i in range(len(piles)):
+            #---注解---
+            a = piles[i]//K
+            if (piles[i]%K)==0:
+                total += a
+            else:
+                total = total+a+1
+            #total = total+a if (piles[i]%K)==0 else total+a+1
+        K = K+1
+    return (K-1)
+
+'''
+注解 ： a 首先考虑 每小时 k 的时候，一堆吃一个小时 ，是否还有剩余，
+        没有的话  总用时 total 则 加 a ，否则  需要  +1 小时吃完一堆
+'''

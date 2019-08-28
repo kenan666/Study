@@ -37,6 +37,22 @@ n 将在 [1, 10000]之间。
 nums 的每个元素都将在 [-9999, 9999]之间。
 
 '''
+#-------------解--------------->
+def getTarget(nums,target):
+    
+    if len(nums) == 0:
+        return False
+    
+    left ,right = 0,len(nums)-1
+    while left < right:
+        mid = (left + right) //2
+        if nums[mid] > target:
+            right = nums[mid] - 1
+        elif nums[mid] == target:
+            return mid 
+        elif nums[mid] < target:
+            left = nums[mid] + 1
+    return -1
 
 # 3、----------识别和模板-------------
 '''
@@ -119,6 +135,27 @@ def mySqrt(self, x):
     :rtype: int
     """
 '''
+#------->  >>  解 1  ------
+import math
+def mySqrt(x):
+    if x <= 0:
+        return False
+    while x > 0:
+        left = 0
+        right = math.ceil(x/2)
+        res = 0
+        while left <= right:
+            mid = (left + right) // 2
+            tmp = mid * mid
+            if tmp == x:
+                return mid 
+            elif tmp < x:
+                left = mid + 1
+            else :
+                right = mid -1 
+                #print(right)
+    return right
+
 #---例2--->   猜数字大小  <--------
 '''
 我们正在玩一个猜数字游戏。 游戏规则如下：
@@ -141,6 +178,24 @@ def guessNumber(self, n):
     :rtype: int
     """
 '''
+#-------------解 1---------------
+def guessNumber(n,target):
+    if not n:
+        return False
+    while n:
+        left = 1
+        right = n
+        mid = (left + right) //2
+        
+        if mid == target:
+            return 0
+        elif mid < target:
+            left = mid + 1
+            return -1
+        else :
+            right = mid -1 
+            return 1
+
 #---例3--->   搜索旋转排序数组  <--------
 '''
 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
@@ -170,6 +225,33 @@ def search(self, nums, target):
     :rtype: int
     """
 '''
+#-------------解1----------------
+def getTarget(nums,target):
+    left = 0
+    right = len(nums) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        #print(mid)
+        
+        if nums[mid] == target:
+            return mid
+        if nums[mid] == nums[left] == nums[right]:
+            left += 1
+            right -= 1
+        
+        elif nums[left] <= nums[mid]:  #  下面进行 target 与左右两边值的判断，由此来判断 mid 的位置
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        else:
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+    return False
 
 #-----模板2---------
 '''
@@ -225,7 +307,8 @@ def binarySearch(nums, target):
 
 假设你有 n 个版本 [1, 2, ..., n]，你想找出导致之后所有版本出错的第一个错误的版本。
 
-你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。你应该尽量减少对调用 API 的次数。
+你可以通过调用 bool isBadVersion(version) 接口来判断版本号 version 是否在单元测试中出错。实现一个函数来查找第一个错误的版本。
+你应该尽量减少对调用 API 的次数。
 
 示例:
 
@@ -328,8 +411,10 @@ def binarySearch(nums, target):
 
     # Post-processing:
     # End Condition: left + 1 == right
-    if nums[left] == target: return left
-    if nums[right] == target: return right
+    if nums[left] == target: 
+        return left
+    if nums[right] == target: 
+        return right
     return -1
 
 #---关键属性----
