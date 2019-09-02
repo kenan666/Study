@@ -326,6 +326,22 @@ def firstBadVersion(self, n):
     :rtype: int
     """
 '''
+# ----------------->  解1------------
+def isBadVersion(version):
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        left, right = 1, n
+        while left < right: 
+            middle = (left + right) // 2
+            if isBadVersion(middle):
+                right = middle
+            else:
+                left = middle + 1
+        return left
+
 
 #-------例2--->   寻找峰值  <--------
 '''
@@ -358,6 +374,23 @@ def findPeakElement(self,nums):
     :rtype: int
     """
 '''
+# ---------> 解1------------
+def findPeakElement(self, nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    left = 0
+    right = len(nums) - 1
+    while left < right:
+        mid = left + (right - left) // 2
+        if nums[mid] < nums[mid + 1]:
+            left = mid + 1 
+        else:
+            right = mid
+    return left
+
+
 
 #-----例3---->  寻找旋转排序数组中的最小值 <----------
 '''
@@ -385,6 +418,56 @@ def findMin(self, nums):
     :rtype: int
     """
 '''
+#-----------解1---------
+'''
+
+二分法,判断二分点,几种可能性
+
+直接nums[mid] == target
+
+1、当数组为[1,2,1,1,1],nums[mid] == nums[left] == nums[right],需要left++, right --;
+
+2、当nums[left]<= nums[mid],说明是在左半边的递增区域
+
+​	a. nums[left] <=target < nums[mid],说明target在left和mid之间.我们令right = mid - 1;
+
+​	b. 不在之间, 我们令 left = mid + 1;
+
+3、当nums[mid] < nums[right],说明是在右半边的递增区域
+
+​	a. nums[mid] < target <= nums[right],说明target在mid 和right之间,我们令left = mid + 1
+
+​	b. 不在之间,我们令right = mid - 1;
+
+'''
+#  ---->>>>  ****时间复杂度:O(logn)
+
+def search(self, nums: List[int], target: int) -> bool:
+        
+    left = 0
+    right = len(nums) - 1
+    while left <= right:
+        #print(left, right)
+        mid = left + (right - left) // 2
+        # 等于目标值
+        if nums[mid] == target:
+            return True        
+        if nums[mid] == nums[left] == nums[right]:
+            left += 1
+            right -= 1
+        # 在前部分
+        elif nums[left] <= nums[mid]:
+            if nums[left] <= target < nums[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        else:
+            if nums[mid] < target <= nums[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+    return False
+
 
 #--------模板3--------
 '''
