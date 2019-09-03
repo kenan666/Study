@@ -10,10 +10,10 @@ def construct_tree(preorder=None, inorder=None):
     if not preorder or not inorder:
         return None
 
-    index = inorder.index(preorder[0])
-    left = inorder[0:index]
-    right  = inorder[index+1:]
-    root = TreeNode (preorder[0])
+    index = inorder.index(preorder[0])  # 确定 根节点-->给定数据的第一个数字
+    left = inorder[0:index]  # 左子树 所有节点
+    right  = inorder[index+1:] # 右子树所有节点
+    root = TreeNode (preorder[0])  # 根节点
 
     root.left = construct_tree(preorder[1:1+len(left)],left)
     root.right = construct_tree(preorder[-len(right):],right)
