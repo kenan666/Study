@@ -22,7 +22,7 @@ def reOrderArray(self,array):
         while pBegin < pEnd and self.isEven(array[pEnd]):
             pEnd -= 1
 
-        if pBegin < pEnd:  # 两两交换
+        if pBegin < pEnd:  # 两两交换 
             temp = array[pBegin]
             array[pBegin] = array[pEnd]
             array[pEnd] = temp

@@ -32,11 +32,14 @@ def entryNodeOfLoop(pHead):
         # 两指针相遇且非空，则说明有环
         if pFast == pSlow:
             break   
-    
-    pFast = pHead
-    while pFast != pSlow:
-        pFast = pFast.next 
-        pSlow = pSlow.next
+        
+        else:
+            pFast = pFast.next 
+            pSlow = pSlow.next
+    # pFast = pHead
+    # while pFast != pSlow:
+    #     pFast = pFast.next 
+    #     pSlow = pSlow.next
 
     return pFast # 返回入口节点
 
