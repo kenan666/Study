@@ -43,7 +43,8 @@ def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
         # 目前tmp在k+1位置
         # 说明剩下的链表不够k个，跳出循环
         if count:
-            p.next = headbreak
+            p.next = head
+            break
         
         # 翻转操作
         while stack:
