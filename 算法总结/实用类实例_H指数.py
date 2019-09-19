@@ -81,7 +81,7 @@ def hIndex(citations):
             return idx
     return len(citations)
 
-#-----------通排序-------------
+#-----------桶排序-------------
 def hIndex( citations):
     n = len(citations)
     bucket = [0] * (n + 1)
@@ -118,3 +118,40 @@ def hIndex(citations):
     if left < n and citations[left] >= n - left: 
         return n - left
     return 0
+
+#---------------------------------------------------------------------------
+#---知识点补充---------
+'''
+桶排序（Bucket sort）或所谓的箱排序，是一个排序算法，工作的原理是将数组分到有限数量的桶里。
+每个桶再个别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排序）。
+桶排序是鸽巢排序的一种归纳结果。当要被排序的数组内的数值是均匀分配的时候，
+桶排序使用线性时间O(n)（大O符号））。但桶排序并不是比较排序，他不受到 O(nlogn)下限的影响。
+
+桶排序以下列程序进行：
+
+1、设置一个定量的数组当作空桶子。
+2、寻访序列，并且把项目一个一个放到对应的桶子去。
+3、对每个不是空的桶子进行排序。
+4、从不是空的桶子里把项目再放回原来的序列中。
+'''
+#----- python 实现------
+def bucket_sort(array, n):
+    # 1.创建n个空桶
+    new_list = [[] for _ in range(n)]
+
+    # 2.把arr[i] 插入到bucket[n*array[i]]
+    for data in array:
+        index = int(data * n)
+        new_list[index].append(data)
+
+    # 3.桶内排序
+    for i in range(n):
+        new_list[i].sort()
+
+    # 4.产生新的排序后的列表
+    index = 0
+    for i in range(n):
+        for j in range(len(new_list[i])):
+            array[index] = new_list[i][j]
+            index += 1
+    return array
