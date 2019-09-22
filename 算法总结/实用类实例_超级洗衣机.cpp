@@ -100,3 +100,37 @@ public:
         return res;
     }
 };
+//-------------python --------
+/*
+def findMinMoves(machines):
+
+    if len(machines) < 1:
+        return -1
+
+    size = len(machines)
+    Sum = 0
+
+    for i in range (size):
+        Sum += machines[i] # 生成预处理数组
+        #print(Sum)
+
+    if Sum % size != 0:  # 判断 衣服数量 % 机器总数 ！= 0  是否等于0
+        return -1
+
+    avg = Sum / size  # 设置平均值 avg 
+    leftsum,res= 0,0
+    
+    for i in range (size):
+        L = i * avg -leftsum  # i左边的需要的数目-累加和
+        R = (size - i - 1 ) * avg -(Sum - leftsum - machines[i]) # i右边的需要数目-累加和
+
+        if L>0 and R>0 : # 如果L > 0，R > 0 ，则两边都少了衣服，瓶颈在于两者之和
+            res = max(L+R,res)
+        else:  #  其它情况的瓶颈都在于两者的绝对值的最大值
+            res = max(max(abs(L),abs(R)),res)
+
+        leftsum += machines[i]
+    
+    return res
+
+*/
