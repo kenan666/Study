@@ -639,7 +639,7 @@ bool coreExist(int vcount, PointEx polygon[], PointEx &p) {
 	}
 	if (i < vcount)
 		return true;
-	else
+	else 
 		return false;
 }
 bool pointInCircle(PointEx o, double r, PointEx p) {
